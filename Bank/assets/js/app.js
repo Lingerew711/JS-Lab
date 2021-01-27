@@ -63,7 +63,11 @@ function withdraw(accountNumber, money) {
     } else {
         if (money <= 0) {
             return "Please enter a valid amount"
-        } else {
+        }
+        else if(money >10000){
+            return "Sorry! you can not withdraw above 10,000 birr at once, decrease the amount and try again."
+        }
+         else {
             let accountIndex = bankAccounts.accounts.findIndex(account => account.accountNumber == accountNumber)
             let currentBalance = bankAccounts.accounts[accountIndex].balance
             let result = currentBalance - money
@@ -105,9 +109,9 @@ function transfer(sender, receiver, amount) {
     }
 }
 (function () {
-    cont = true
-    while (cont) {
-        let choice = parseInt(prompt("Welcome to my simple bank system \n Choose what you want to do: \n 1) Creat Account  \n 2) See balance \n 3) Withdraw money \n 4) Deposit money \n 5) Transfer Money \n press any other key to quit"))
+    check = true
+    while (check) {
+        let choice = parseInt(prompt("Welcome to my simple bank system \n Choose what you want to do: \n 1) Creat Account  \n 2) Check balance \n 3) Withdraw \n 4) Deposit \n 5) Transfer  \n press any other key to quit"))
 
         if (choice === 1) {
             let accountData = {
@@ -119,37 +123,37 @@ function transfer(sender, receiver, amount) {
             const result = creatAccount(accountData)
             console.table(bankAccounts.accounts)
             console.log(result)
-            alert(result)
+            
         
         } else if (choice === 2) {
             let accountNumber = parseInt(prompt("Enter Account Number: "))
             console.log("*********************************************")
             console.log("Your balance is " +balance(accountNumber))
-            alert("Your balance is "+balance(accountNumber))
+            
 
         } else if (choice === 3) {
             let accountNumber = parseInt(prompt("Enter Account Number: "))
             let selectedAccountNumber = bankAccounts.accounts.filter(account => account.accountNumber == accountNumber)
             if (selectedAccountNumber.length === 0) {
-                alert("the account you selected doesn't exist")
+               
                 console.log("the account you selected doesn't exist")
             } else {
                 let amount = parseFloat(prompt("Selected Account: "+selectedAccountNumber[0].fullName+ "\n Account Number: "+selectedAccountNumber[0].accountNumber +"\n Enter the amount you want to withdraw: "))
                 let result = withdraw(accountNumber, amount)
                 console.log(result)
-                alert(result)
+                
             }
         } else if (choice == 4) {
             let accountNumber = parseInt(prompt("Enter Account Number: "))
             let selectedAccountNumber = bankAccounts.accounts.filter(account => account.accountNumber == accountNumber)
             if (selectedAccountNumber.length === 0) {
-                alert("the account you selected doesn't exist")
+                
                 console.log("the account you selected doesn't exist")
             } else {
                 let amount = parseFloat(prompt("Selected Account: " +selectedAccountNumber[0].fullName +" \n Account Number: "+selectedAccountNumber[0].accountNumber+ "\n Enter the amount you want to deposit: "))
                 let result = deposit(accountNumber, amount)
                 console.log(result)
-                alert(result)
+                
             }
         } else if (choice == 5) {
             let sender = parseInt(prompt("Enter Sender Account Number: "))
@@ -158,10 +162,10 @@ function transfer(sender, receiver, amount) {
 
             let result = transfer(sender, receiver, money)
             console.log(result)
-            alert(result)
+            
         } else {
             console.log("Exiting")
-            cont = false
+            check = false
         }
     }
 
